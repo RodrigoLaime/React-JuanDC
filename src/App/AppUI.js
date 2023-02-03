@@ -23,24 +23,21 @@ function AppUI() {
     <React.Fragment>
       <TodoCounter />
       <TodoSearch />
-      <TodoContext.Consumer>
 
-        <TodoList>
-          {error && <p>Error</p>}
-          {loading && <p>Cargando</p>}
-          {(!loading && !searchedTodos.length) && <p>Crear todo</p>}
-          {searchedTodos.map(todo => (
-            <TodoItem
-              key={todo.text}
-              text={todo.text}
-              completed={todo.completed}
-              onComplete={() => completeTodo(todo.text)}
-              onDelete={() => deleteTodo(todo.text)}
-            />
-          ))}
-        </TodoList>
-
-      </TodoContext.Consumer>
+      <TodoList>
+        {error && <p>Error</p>}
+        {loading && <p>Cargando</p>}
+        {(!loading && !searchedTodos.length) && <p>Crear todo</p>}
+        {searchedTodos.map(todo => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
+          />
+        ))}
+      </TodoList>
 
       <CreateTodoButton />
     </React.Fragment>
