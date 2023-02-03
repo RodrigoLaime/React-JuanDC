@@ -8,22 +8,45 @@ import { AppUI } from './AppUI';
   { text: 'LALALALAA', completed: false },]; */
 
 
-function App() {
-  const localStorageTodos = localStorage.getItem('TODOS_V1')
+function useLocalStorage(itemName, initialValue) {
+
+  const localStorageItem = localStorage.getItem('TODOS_V1')
   //nuestro estado por defecto
-  let parsedTodos;
+  let parsedItem;
 
   //si no hay nada creado
-  if (!localStorageTodos) {
+  if (!localStorageItem) {
     //crear por defecto una lista bacia transformando a string
-    localStorage.setItem('TODOS_V1', JSON.stringify([]));
-    parsedTodos = [];
+    localStorage.setItem('TODOS_V1', JSON.stringify(initialValue));//cambiar el array por initialValue=[]
+    parsedItem = initialValue;
   } else { //si ya hay algocreado
     //obtenemos los datos transformando el string a object
-    parsedTodos = JSON.parse(localStorageTodos)
+    parsedItem = JSON.parse(localStorageItem)
   }
 
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const [item, setItem] = React.useState(parsedItem);
+
+  //guardar las actualizaciones completes y eliminar con persistencia en localstorage 
+  const saveItem = (newItem) => {
+    //convertimos a string Item nuestros Item
+    const stringifiedItem = JSON.stringify(newItem)
+    //persistencia
+    localStorage.setItem(itemName, stringifiedItem)
+    //evitar recargar la pagina, permite quedar con la ultima version
+    setItem(newItem)
+  }
+
+  //actualizar los elementos
+  return [
+    item,
+    saveItem,
+  ];
+}
+
+function App() {
+
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1', [])//se puede cambiar a v2
+
   const [searchValue, setSearchValue] = React.useState('');
 
   //para ver cuantos toso tenemos en el array
@@ -45,15 +68,7 @@ function App() {
     });
   }
 
-  //guardar las actualizaciones completes y eliminar con persistencia en localstorage 
-  const saveTodos = (newTodos) => {
-    //convertimos a string todos nuestros todos
-    const stringifiedTodos = JSON.stringify(newTodos)
-    //persistencia
-    localStorage.setItem('TODOS_V1', stringifiedTodos)
-    //evitar recargar la pagina, permite quedar con la ultima version
-    setTodos(newTodos)
-  }
+
 
   //funcion para editar todos
   const completeTodo = (text) => {
