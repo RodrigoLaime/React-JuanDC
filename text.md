@@ -30,3 +30,13 @@ localStorage.setItem('ejemplotodo', ejemplo)
 ## traer de localstorage
 
 JSON.parse(localStorage.getItem('ejemplotodo'))
+
+
+###
+const defaultTodos = [
+  { text: 'Cortar cebolla', completed: true },
+  { text: 'Tomar el cursso de intro a React', completed: false },
+  { text: 'Llorar con la llorona', completed: true },
+  { text: 'LALALALAA', completed: false },]; 
+undefined
+localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
