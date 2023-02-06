@@ -1,18 +1,21 @@
-import React from "react";
-import './CreateTodoButton.css'
+import React from 'react';
+import './CreateTodoButton.css';
+
 function CreateTodoButton(props) {
-  const onclickButton = (msg) => {
-    alert(msg)
-  }
+  const onClickButton = () => {
+    //prevState es una funcion que opermite volver al estado anterior
+    //se cierra o se abre el modal
+    props.setOpenModal(prevState => !prevState);
+  };
 
   return (
     <button
       className="CreateTodoButton"
-      onClick={() => onclickButton('Modal')}
+      onClick={onClickButton}
     >
       +
     </button>
   );
 }
 
-export { CreateTodoButton }
+export { CreateTodoButton };

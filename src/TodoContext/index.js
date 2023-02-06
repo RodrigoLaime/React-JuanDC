@@ -14,6 +14,7 @@ function TodoProvider(props) {
   } = useLocalStorage('TODOS_V1', [])//se puede cambiar a v2
 
   const [searchValue, setSearchValue] = React.useState('');
+  const [openModal, setOpenModal] = React.useState(false);
 
   //para ver cuantos toso tenemos en el array
   const completedTodos = todos.filter(todo => !!todo.completed).length;
@@ -35,6 +36,19 @@ function TodoProvider(props) {
   }
 
 
+
+  //funcion para editar todos y se guarda
+  const addTodo = (text) => {
+    //creamos una copioa de todos
+    const newTodos = [...todos]
+    //crea un nuevo todo incompleta
+    newTodos.push({
+      completed: false,
+      text,
+    });
+    //actualizar estado
+    saveTodos(newTodos);
+  }
 
   //funcion para editar todos
   const completeTodo = (text) => {
@@ -68,11 +82,14 @@ function TodoProvider(props) {
       error,
       totalTodos,
       completedTodos,
+      addTodo,
       searchValue,
       setSearchValue,
       searchedTodos,
       completeTodo,
       deleteTodo,
+      openModal,
+      setOpenModal,
     }}
     >
       {props.children}
